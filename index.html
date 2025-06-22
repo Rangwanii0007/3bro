@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4Brothers – Hot Pizza, Juicy Burgers & Refreshing Drinks</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Oswald for headings, Inter for body -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Cart Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Base styles for body and fonts */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000; /* Pure Black Background */
+            color: #FFFFFF; /* Default text color */
+            overflow-x: hidden; /* Prevent horizontal scroll from animations */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            position: relative; /* For pseudo-element background */
+        }
+
+        /* Subtle Animated Background Grain/Noise for added texture */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Using a more complex SVG for richer grain */
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIj48ZmVDb2xvck1hdHJpeCBpbiJmbG9vZCIgdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAuMDUgMC4wNSAwLjA1IDAgMCAwLjA1IDAuMDUgMC4wNSAwIDAgMC4wNSAwLjA1IDAuMDUgMCAwIDAgMCAwIDEgMCIvPjxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjc1IiBudW1PY3RhdmVzPSI0IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PGZlQmxlbmQgbW9kZT0ic2NyZWVuIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIwLjMiLz48L3N2Z3I+');
+            background-size: 64px 64px;
+            pointer-events: none; /* Allows clicks to pass through */
+            z-index: -3; /* Below parallax but above everything else */
+            animation: grain-animation 8s steps(10) infinite; /* Continuous subtle movement */
+        }
+
+        @keyframes grain-animation {
+            0% { transform: translate(0, 0); }
+            10% { transform: translate(-5%, -10%); }
+            20% { transform: translate(-15%, 10%); }
+            30% { transform: translate(7%, -15%); }
+            40% { transform: translate(-10%, 5%); }
+            50% { transform: translate(-20%, -5%); }
+            60% { transform: translate(15%, 0); }
+            70% { transform: translate(0, 10%); }
+            80% { transform: translate(10%, -10%); }
+            90% { transform: translate(-5%, 15%); }
+            100% { transform: translate(0, 0); }
+        }
+
+        /* Custom font for headings - Oswald for bold, vintage-modern feel */
+        .font-heading {
+            font-family: 'Oswald', sans-serif;
+        }
+
+        /* Hero section specific styles */
+        .hero-section {
+            /* Changed to a specific pizza/burger background image */
+            background-image: url('https://images.unsplash.com/photo-1574126154517-d1e0d89ef098?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); /* Pizza and burger background */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+            /* Added a strong dark overlay for text readability */
+            background-blend-mode: multiply; /* Blends with gradient for depth */
+            background-color: rgba(0, 0, 0, 0.7); /* Dark overlay */
+        }
+
+        /* Hero Text/Logo Glow - More dynamic pulse */
+        .hero-title-glow {
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.3), 0 0 30px rgba(255, 215, 0, 0.1);
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
+            animation: pulse-glow 2.5s infinite alternate; /* Slightly slower, more prominent pulse */
+        }
+
+        @keyframes pulse-glow {
+            from { filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6)) brightness(1); transform: scale(1); }
+            to { filter: drop-shadow(0 0 30px rgba(255, 215, 0, 1)) brightness(1.2); transform: scale(1.01); } /* Slight scale with glow */
+        }
+
+        /* Sticky header background on scroll */
+        .header-scrolled {
+            background-color: rgba(0, 0, 0, 0.95); /* Even less transparent */
+            backdrop-filter: blur(15px) saturate(180%); /* More blur and saturation */
+            -webkit-backdrop-filter: blur(15px) saturate(180%);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8); /* Stronger, deeper shadow */
+        }
+
+        /* CTA Button Floating Icons Animation */
+        @keyframes floatEffect {
+            0% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-7px) rotate(3deg); } /* Increased float */
+            50% { transform: translateY(0px) rotate(0deg); }
+            75% { transform: translateY(-7px) rotate(-3deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .float-animation {
+            animation: floatEffect 3s ease-in-out infinite;
+        }
+        .float-animation.delay-1 { animation-delay: 0.15s; }
+        .float-animation.delay-2 { animation-delay: 0.3s; }
+
+        /* Universal Fade In Up Animation for Sections - More springy */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px); /* Starts lower */
+            transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smoother curve */
+        }
+        .fade-in-up.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Scroll Animation Elements (for intro) - Actual images with more dynamic 3D animation */
+        .flying-element {
+            position: absolute;
+            opacity: 0;
+            z-index: 10;
+            filter: drop-shadow(0 0 25px rgba(255, 184, 0, 0.9)); /* Even stronger glow */
+            /* Ensure images cover their container without distortion */
+            object-fit: contain; /* Use contain for icons to ensure they fit */
+        }
+
+        /* Pizza from Left - Complex Keyframe Animation with 3D rotation */
+        #pizzaSlice {
+            top: 40%;
+            left: -800px; /* Start much further off-screen for dramatic entrance */
+            width: 400px; /* Larger size for impact */
+            height: auto;
+            transform: translateY(-50%) rotateZ(-90deg) rotateY(180deg) scale(0.3); /* Start rotated and small in 3D */
+            transform-style: preserve-3d; /* Enable 3D for nested transforms */
+            perspective: 1000px;
+        }
+        #pizzaSlice.animate-in {
+            animation: pizza-entrance 2.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards; /* Longer, bouncier 3D entrance */
+        }
+        @keyframes pizza-entrance {
+            0% { left: -800px; opacity: 0; transform: translateY(-50%) rotateZ(-90deg) rotateY(180deg) scale(0.3); }
+            60% { left: 12%; opacity: 1; transform: translateY(-50%) rotateZ(10deg) rotateY(-20deg) scale(1.1); } /* Overshoot with complex rotation */
+            100% { left: 5%; opacity: 1; transform: translateY(-50%) rotateZ(0deg) rotateY(0deg) scale(1); } /* Settle */
+        }
+
+        /* Burger from Right - Complex Keyframe Animation with 3D rotation */
+        #burger {
+            top: 60%;
+            right: -800px; /* Start much further off-screen for dramatic entrance */
+            width: 400px; /* Larger size for impact */
+            height: auto;
+            transform: translateY(-50%) rotateZ(90deg) rotateY(-180deg) scale(0.3); /* Start rotated and small in 3D */
+            transform-style: preserve-3d; /* Enable 3D for nested transforms */
+            perspective: 1000px;
+        }
+        #burger.animate-in {
+            animation: burger-entrance 2.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards; /* Longer, bouncier 3D entrance */
+        }
+        @keyframes burger-entrance {
+            0% { right: -800px; opacity: 0; transform: translateY(-50%) rotateZ(90deg) rotateY(-180deg) scale(0.3); }
+            60% { right: 12%; opacity: 1; transform: translateY(-50%) rotateZ(-10deg) rotateY(20deg) scale(1.1); } /* Overshoot with complex rotation */
+            100% { right: 5%; opacity: 1; transform: translateY(-50%) rotateZ(0deg) rotateY(0deg) scale(1); } /* Settle */
+        }
+
+        /* Deal Text Animation - More impactful pop-in */
+        .deal-text {
+            opacity: 0;
+            transform: translateY(70px) scale(0.6); /* Starts further down and smaller */
+            animation: none; /* Initially, no animation */
+        }
+        .deal-text.animate-in {
+            animation: text-pop-in 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; /* Bouncier pop */
+        }
+        @keyframes text-pop-in {
+            0% { opacity: 0; transform: translateY(70px) scale(0.6); }
+            70% { opacity: 1; transform: translateY(-10px) scale(1.05); } /* Overshoot */
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+
+        /* Parallax background effect - More responsive */
+        .parallax-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Changed to a more subtle, blurred food pattern for parallax */
+            background-image: url('https://images.unsplash.com/photo-1549463990-2c38d4b38d38?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); /* Abstract food pattern */
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+            transition: transform 0.1s linear; /* Faster, more noticeable parallax */
+            will-change: transform;
+            filter: blur(5px) grayscale(50%); /* Subtle blur and desaturation */
+            background-blend-mode: overlay; /* Blend to make it less prominent */
+            background-color: rgba(0, 0, 0, 0.3); /* Slight dark tint */
+        }
+
+        /* Deal Card hover effect (Image float, text subtle transform) - More pronounced */
+        .deal-card-content {
+            transition: transform 0.4s ease-out; /* Slower, smoother lift */
+        }
+        .deal-card:hover .deal-card-content {
+            transform: translateY(-20px); /* Card content lifts even more prominently */
+        }
+        .deal-card-image {
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1); /* Slower, more impactful bounce */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5); /* Stronger initial shadow */
+            object-fit: cover; /* Ensure images cover the area without distortion */
+            filter: saturate(1.1); /* Slightly more vibrant images */
+        }
+        .deal-card:hover .deal-card-image {
+            transform: scale(1.15) rotate(7deg); /* Image scales and rotates even more aggressively */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8); /* Much stronger, deeper shadow on hover */
+            filter: saturate(1.3) brightness(1.1); /* Even more vibrant and brighter on hover */
+        }
+
+        /* Glowing Red for offers/prices - More intense */
+        .text-red-highlight {
+            color: #FF4444;
+            filter: drop-shadow(0 0 12px rgba(255, 68, 68, 1)) saturate(200%); /* Max intensity glow & saturation */
+        }
+
+        /* Glassmorphism for buttons/cards - Maximum effect */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.03); /* Almost transparent base */
+            backdrop-filter: blur(30px) saturate(250%); /* Max blur, max saturation for dramatic glass */
+            -webkit-backdrop-filter: blur(30px) saturate(250%);
+            border: 1px solid rgba(255, 255, 255, 0.08); /* Finer, almost invisible border */
+            box-shadow: 0 20px 60px 0 rgba(0, 0, 0, 0.6); /* Very strong initial shadow */
+            transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1); /* Smoother, more elegant transition */
+        }
+        .glass-effect:hover {
+            background: rgba(255, 255, 255, 0.08); /* Slightly more opaque on hover */
+            box-shadow: 0 35px 90px 0 rgba(0, 0, 0, 0.9); /* Extreme shadow on hover for depth */
+        }
+
+        /* Button Hover Effects - More Advanced & tactile */
+        .button-primary {
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); /* Smoother transition */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* Base shadow */
+        }
+        .button-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent); /* Stronger shine */
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: -1;
+        }
+        .button-primary:hover::before {
+            left: 100%;
+        }
+        .button-primary:hover {
+            transform: translateY(-5px) scale(1.03); /* More lift and scale */
+            box-shadow: 0 15px 30px rgba(0,0,0,0.6), 0 0 30px rgba(255, 184, 0, 0.9); /* Deeper shadow with intense glow */
+            border-color: #FFD700; /* Subtle border change on hover */
+        }
+
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 12px; /* Even wider scrollbar */
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505; /* Even darker track */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FFD700; /* Brighter thumb */
+            border-radius: 6px; /* More rounded */
+            border: 2px solid #000; /* Black border for definition */
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FFE800; /* Lighter on hover */
+        }
+
+        /* Cart Icon Animation - More prominent bounce */
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.4); opacity: 1; } /* Even more bounce */
+            100% { transform: scale(1); }
+        }
+        .cart-bounce {
+            animation: bounceIn 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncier animation */
+        }
+
+        /* Special Offer Card Animations - Ultimate refinement with 3D depth and full rotation */
+        .offer-card {
+            opacity: 0;
+            transform-style: preserve-3d; /* Enable 3D transforms for children */
+            perspective: 1000px; /* Adds perspective to the parent */
+            transition: transform 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 1.2s ease-in; /* Longer, bouncier 3D transition */
+        }
+        .offer-card.slide-in-left {
+            transform: translateX(-350px) scale(0.6) rotateY(90deg); /* Start off-left, smaller, and fully rotated */
+            transform-origin: left center;
+        }
+        .offer-card.slide-in-right {
+            transform: translateX(350px) scale(0.6) rotateY(-90deg); /* Start off-right, smaller, and fully rotated */
+            transform-origin: right center;
+        }
+        .offer-card.animate-in-offer {
+            opacity: 1;
+            transform: translateX(0) scale(1) rotateY(0deg); /* Ends at original position, full size, no rotation */
+        }
+
+        /* Mobile specific adjustments - Adjusted for larger elements on mobile */
+        @media (max-width: 768px) {
+            /* Adjustments for flying elements on mobile: simpler entry */
+            #pizzaSlice, #burger {
+                width: 150px; /* Smaller for mobile, less intrusive */
+                height: auto;
+                left: 50%; /* Center horizontally */
+                transform: translateX(-50%) translateY(-50%) rotate(0deg) scale(0.8) !important; /* Override complex desktop transform */
+                animation: none !important; /* Disable complex 3D animation */
+                transition: opacity 1s ease-out, transform 1s ease-out !important; /* Simpler transition */
+            }
+            #pizzaSlice.animate-in, #burger.animate-in {
+                opacity: 1 !important;
+                transform: translateX(-50%) translateY(-50%) rotate(0deg) scale(1) !important;
+            }
+
+            .hero-section h1 {
+                font-size: 4.5rem; /* Larger heading */
+            }
+            .hero-section p {
+                font-size: 1.3rem; /* Larger tagline */
+            }
+            .deal-text {
+                font-size: 3.5rem; /* Even larger on mobile */
+            }
+            .offer-card.slide-in-left,
+            .offer-card.slide-in-right {
+                /* On mobile, prefer a simpler scale-in from center or slight Y-translate */
+                transform: translateY(50px) scale(0.8); /* Starts slightly below, smaller */
+                transform-origin: center center; /* Reset transform origin for mobile */
+            }
+            .offer-card.animate-in-offer {
+                transform: translateY(0) scale(1); /* Animate to full size */
+            }
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+
+    <!-- Parallax Background Layer -->
+    <div class="parallax-bg" id="parallaxBg"></div>
+
+    <!-- Main Navigation Bar -->
+    <nav class="fixed top-0 left-0 right-0 p-6 z-50 transition-all duration-500" id="mainNav">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#hero" class="text-4xl md:text-5xl font-heading text-[#FFD700] tracking-wide hero-title-glow">4Brothers</a>
+            <!-- Desktop Navigation Links -->
+            <div class="space-x-8 hidden md:flex items-center text-lg font-semibold">
+                <a href="#hero" class="text-white hover:text-[#FFD700] transition-colors duration-300">Home</a>
+                <a href="#menu" class="text-white hover:text-[#FFD700] transition-colors duration-300">Menu</a>
+                <a href="#special-offers" class="text-white hover:text-[#FFD700] transition-colors duration-300">Offers</a>
+                <a href="#contact" class="text-white hover:text-[#FFD700] transition-colors duration-300">Contact</a>
+                <!-- Cart Icon -->
+                <div class="relative ml-6">
+                    <button id="cartButton" class="text-white hover:text-[#FFD700] transition-colors duration-300 relative focus:outline-none">
+                        <i class="fas fa-shopping-cart text-2xl"></i>
+                        <span id="cartCount" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center transform scale-0 origin-center transition-transform duration-300">0</span>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile Menu Button (Hamburger) -->
+            <button class="md:hidden text-white focus:outline-none z-50" id="mobileMenuButton" aria-label="Open Mobile Menu">
+                <svg class="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation Overlay (Hidden by default) -->
+    <div id="mobileMenuOverlay" class="fixed inset-0 bg-black bg-opacity-95 z-40 flex flex-col items-center justify-center space-y-10 text-3xl font-heading transition-transform transform translate-x-full md:hidden">
+        <a href="#hero" class="text-white hover:text-[#FFD700] transition-colors duration-300" onclick="closeMobileMenu()">Home</a>
+        <a href="#menu" class="text-white hover:text-[#FFD700] transition-colors duration-300" onclick="closeMobileMenu()">Menu</a>
+        <a href="#special-offers" class="text-white hover:text-[#FFD700] transition-colors duration-300" onclick="closeMobileMenu()">Offers</a>
+        <a href="#contact" class="text-white hover:text-[#FFD700] transition-colors duration-300" onclick="closeMobileMenu()">Contact</a>
+        <!-- Mobile Cart Icon -->
+        <div class="relative mt-8">
+            <button id="mobileCartButton" class="text-white hover:text-[#FFD700] transition-colors duration-300 relative focus:outline-none">
+                <i class="fas fa-shopping-cart text-3xl"></i>
+                <span id="mobileCartCount" class="absolute -top-2 -right-2 bg-red-600 text-white text-base font-bold rounded-full h-7 w-7 flex items-center justify-center transform scale-0 origin-center transition-transform duration-300">0</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero">
+        <div class="relative z-10 p-6 max-w-4xl mx-auto">
+            <h1 class="text-6xl md:text-9xl font-heading text-[#FFD700] mb-4 drop-shadow-2xl leading-tight hero-title-glow">4Brothers</h1>
+            <p class="text-xl md:text-3xl text-gray-200 mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-in delay-200">Hot Pizza, Juicy Burgers – Taste the Tradition!</p>
+            <button class="bg-[#FFB800] text-black px-12 py-5 rounded-full text-xl md:text-2xl font-bold uppercase button-primary shadow-2xl relative group focus:outline-none">
+                Order Now
+                <span class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center space-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 transform -translate-x-full">
+                    <svg class="w-7 h-7 text-black float-animation delay-1" fill="currentColor" viewBox="0 0 24 24"><path d="M13.5 4.5a.75.75 0 00-1.5 0v3.024a3 3 0 00-1.854 1.716L5.343 14.25H2.25a.75.75 0 000 1.5h3.633a.75.75 0 00.672-.444l1.378-2.755 2.597 1.164a.75.75 0 001.213-.538V12a6.002 6.002 0 015.145-5.918 6 6 0 00-5.145-5.918zm0 15a.75.75 0 00-1.5 0v.75a.75.75 0 001.5 0v-.75zM8.25 18a.75.75 0 00-1.5 0v.75a.75.75 0 001.5 0v-.75zM17.25 18a.75.75 0 00-1.5 0v.75a.75.75 0 001.5 0v-.75z"></path><path fill-rule="evenodd" d="M10 18.75a.75.75 0 00-1.5 0v.75a.75.75 0 001.5 0v-.75zM12 21a.75.75 0 00-1.5 0v.75a.75.75 0 001.5 0v-.75zM14 18.75a.75.75 0 00-1.5 0v.75a.75.75 0 001.5 0v-.75zM15.75 12a.75.75 0 00-1.5 0v.75a.75.75 0 001.5 0v-.75z" clip-rule="evenodd"></path></svg>
+                    <svg class="w-8 h-8 text-black float-animation delay-2" fill="currentColor" viewBox="0 0 24 24"><path d="M2.5 17.5a.5.5 0 01.5-.5h19a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-19a.5.5 0 01-.5-.5v-1zM2.5 13.5a.5.5 0 01.5-.5h19a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-19a.5.5 0 01-.5-.5v-1zM2.5 9.5a.5.5 0 01.5-.5h19a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-19a.5.5 0 01-.5-.5v-1zM2.5 5.5a.5.5 0 01.5-.5h19a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-19a.5.5 0 01-.5-.5v-1z"></path></svg>
+                </span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Scroll Animation Trigger Section (Visual separator with flying items) -->
+    <section class="h-[100vh] bg-black flex flex-col justify-center items-center text-center relative overflow-hidden py-16" id="scroll-animation-trigger">
+        <!-- Flying Pizza (Image with fallbacks) -->
+        <img id="pizzaSlice" class="flying-element" src="https://images.unsplash.com/photo-1594007654729-407edc388ed9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/400x400/FFB800/000000?text=🍕';" alt="Pizza Slice">
+
+        <!-- Flying Burger (Image with fallbacks) -->
+        <img id="burger" class="flying-element" src="https://images.unsplash.com/photo-1568901346379-8ce8e60cd5b1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/400x400/FFB800/000000?text=🍔';" alt="Burger">
+
+        <p class="text-3xl md:text-5xl font-heading text-[#FFD700] deal-text z-20 max-w-2xl px-4 fade-in-up">Set Deals You Can’t Resist!</p>
+    </section>
+
+    <!-- Special Offers Section -->
+    <section class="py-16 md:py-24 bg-black text-white" id="special-offers">
+        <div class="container mx-auto px-6">
+            <h2 class="text-5xl md:text-7xl font-heading text-center text-[#FFD700] mb-16 drop-shadow-lg fade-in-up">Limited Time Special Offers!</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- Offer Card 1: Pizza Party Pack -->
+                <div class="bg-[#1A1A1A] rounded-2xl p-6 shadow-xl border border-gray-800 flex flex-col items-center text-center deal-card glass-effect offer-card" data-direction="left">
+                    <div class="deal-card-content w-full">
+                        <img src="https://images.unsplash.com/photo-1513104883172-efea9df4ebcd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/400x250/FFB800/000000?text=🍕+Party+Pack';" alt="Pizza Party Pack" class="w-full h-48 object-cover rounded-xl mb-6 deal-card-image">
+                        <h3 class="text-3xl font-heading text-white mb-2">Pizza Party Pack</h3>
+                        <p class="text-lg text-gray-400 mb-4">Any 2 Large Pizzas + 1.5L Drink</p>
+                        <p class="text-5xl font-extrabold text-red-highlight mb-6 animate-pulse">Rs. 1999 <span class="text-gray-500 line-through text-3xl ml-2">Rs. 2400</span></p>
+                        <button class="bg-[#FFB800] text-black px-8 py-3 rounded-full uppercase font-semibold text-lg button-primary shadow-md add-to-cart-btn">Grab Deal!</button>
+                    </div>
+                </div>
+
+                <!-- Offer Card 2: Burger Bonanza Duo -->
+                <div class="bg-[#1A1A1A] rounded-2xl p-6 shadow-xl border border-gray-800 flex flex-col items-center text-center deal-card glass-effect offer-card" data-direction="right">
+                    <div class="deal-card-content w-full">
+                        <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e49?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/400x250/FFB800/000000?text=🍔+Bonanza+Duo';" alt="Burger Bonanza Duo" class="w-full h-48 object-cover rounded-xl mb-6 deal-card-image">
+                        <h3 class="text-3xl font-heading text-white mb-2">Burger Bonanza Duo</h3>
+                        <p class="text-lg text-gray-400 mb-4">Any 2 Burgers + 2 Fries</p>
+                        <p class="text-5xl font-extrabold text-red-highlight mb-6 animate-pulse">Rs. 999 <span class="text-gray-500 line-through text-3xl ml-2">Rs. 1200</span></p>
+                        <button class="bg-[#FFB800] text-black px-8 py-3 rounded-full uppercase font-semibold text-lg button-primary shadow-md add-to-cart-btn">Grab Deal!</button>
+                    </div>
+                </div>
+
+                <!-- Offer Card 3: Mega Family Combo -->
+                <div class="bg-[#1A1A1A] rounded-2xl p-6 shadow-xl border border-gray-800 flex flex-col items-center text-center deal-card glass-effect offer-card" data-direction="left">
+                    <div class="deal-card-content w-full">
+                        <img src="https://images.unsplash.com/photo-1606131498064-a0684f88e169?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/400x250/FFB800/000000?text=🍕🍔+Family+Combo';" alt="Mega Family Combo" class="w-full h-48 object-cover rounded-xl mb-6 deal-card-image">
+                        <h3 class="text-3xl font-heading text-white mb-2">Mega Family Combo</h3>
+                        <p class="text-lg text-gray-400 mb-4">1 Large Pizza + 2 Zinger Burgers + Fries & Drinks</p>
+                        <p class="text-5xl font-extrabold text-red-highlight mb-6 animate-pulse">Rs. 1800 <span class="text-gray-500 line-through text-3xl ml-2">Rs. 2200</span></p>
+                        <button class="bg-[#FFB800] text-black px-8 py-3 rounded-full uppercase font-semibold text-lg button-primary shadow-md add-to-cart-btn">Grab Deal!</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section (Product Showcase) -->
+    <section class="py-16 md:py-24 bg-black text-white" id="menu">
+        <div class="container mx-auto px-6">
+            <h2 class="text-5xl md:text-7xl font-heading text-center text-[#FFD700] mb-16 drop-shadow-lg fade-in-up">Explore Our Delicious Menu</h2>
+
+            <!-- Pizza Category -->
+            <h3 class="text-4xl font-heading text-[#FFD700] text-center mb-10 mt-16 drop-shadow-md fade-in-up">Pizzas</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-20">
+                <!-- Pizza Card 1: Margherita Masterpiece -->
+                <div class="bg-[#1A1A1A] rounded-2xl p-6 shadow-xl border border-gray-800 flex flex-col items-center text-center deal-card glass-effect fade-in-up">
+                    <div class="deal-card-content w-full">
+                        <img src="https://images.unsplash.com/photo-1593560708920-61dd98c46a47?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/400x250/FFB800/000000?text=🍕+Margherita';" alt="Margherita Masterpiece" class="w-full h-48 object-cover rounded-xl mb-6 deal-card-image">
+                        <h3 class="text-3xl font-heading text-white mb-2">Margherita Masterpiece</h3>
+                        <p class="text-lg text-gray-400 mb-4">Classic tomato, fresh mozzarella & basil.</p>
+                        <p class="text-5xl font-extrabold text-red-highlight mb-6 animate-pulse">Rs. 750</p>
+                        <button class="bg-[#FFB800] text-black px-8 py-3 rounded-full uppercase font-semibold text-lg button-primary shadow-md add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Pizza Card 2: Pepperoni Power -->
+                <div class="bg-[#1A1A1A] rounded-2xl p-6 shadow-xl border border-gray-800 flex flex-col items-center text-center deal-card glass-effect fade-in-up">
+                    <div class="deal-card-content w-full">
+                        <img src="https://images.unsplash.com/photo-1628842635384-d42129e795c4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/400x250/FFB800/000000?text=🍕+Pepperoni';" alt="Pepperoni Power" class="w-full h-48 object-cover rounded-xl mb-6 deal-card-image">
+                        <h3 class="text-3xl font-heading text-white mb-2">Pepperoni Power</h3>
+                        <p class="text-lg text-gray-400 mb-4">Loaded with spicy pepperoni slices & cheese.</p>
+                        <p class="text-5xl font-extrabold text-red-highlight mb-6 animate-pulse">Rs. 890</p>
+                        <button class="bg-[#FFB800] text-black px-8 py-3 rounded-full uppercase font-semibold text-lg button-primary shadow-md add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Pizza Card 3: Chicken Fajita Fiesta -->
+                <div class="bg-[#1A1A1A] rounded-2xl p-6 shadow-xl border border-gray-800 flex flex-col items-center text-center deal-card glass-effect fade-in-up">
+                    <div class="deal-card-content w-full">
+                        <img src="https://images.unsplash.com/photo-1627685642459-717013b1f13b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/400x250/FFB800/000000?text=🍕+Chicken+Fajita';" alt="Chicken Fajita Fiesta" class="w-full h-48 object-cover rounded-xl mb-6 deal-card-image">
+                        <h3 class="text-3xl font-heading text-white mb-2">Chicken Fajita Fiesta</h3>
+                        <p class="text-lg text-gray-400 mb-4">Grilled chicken, bell peppers & onions.</p>
+                        <p class="text-5xl font-extrabold text-red-highlight mb-6 animate-pulse">Rs. 1050</p>
+                        <button class="bg-[#FFB800] text-black px-8 py-3 rounded-full uppercase font-semibold text-lg button-primary shadow-md add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Pizza Card 4: Veggie Delight -->
+                <div class="bg-[#1A1A1A] rounded-2xl p-6 shadow-xl border border-gray-800 flex flex-col items-center text-center deal-card glass-effect fade-in-up">
+                    <div class="deal-card-content w-full">
+                        <img src="https://images.unsplash.com/photo-1596706935914-f5ed8d1c798f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/400x250/FFB800/000000?text=🍕+Veggie+Delight';" alt="Veggie Delight" class="w-full h-48 object-cover rounded-xl mb-6 deal-card-image">
+                        <h3 class="text-3xl font-heading text-white mb-2">Veggie Delight</h3>
+                        <p class="text-lg text-gray-400 mb-4">A garden of fresh vegetables & olives.</p>
+                        <p class="text-5xl font-extrabold text-red-highlight mb-6 animate-pulse">Rs. 700</p>
+                        <button class="bg-[#FFB800] text-black px-8 py-3 rounded-full uppercase font-semibold text-lg button-primary shadow-md add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Pizza Card 5: BBQ Chicken Feast -->
+                <div class="bg-[#1A1A1A] rounded-2xl p-6 shadow-xl border border-gray-800 flex flex-col items-center text-center deal-card glass-effect fade-in-up">
+                    <div class="deal-card-content w-full">
+                        <img src="https://images.unsplash.com/photo-1627999818817-482a93325c7e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/400x250/FFB800/000000?text=🍕+BBQ+Chicken';" alt="BBQ Chicken Feast" class="w-full h-48 object-cover rounded-xl mb-6 deal-card-image">
+                        <h3 class="text-3xl font-heading text-white mb-2">BBQ Chicken Feast</h3>
+                        <p class="text-lg text-gray-400 mb-4">Smoky BBQ chicken with a tangy twist.</p>
+                        <p class="text-5xl font-extrabold text-red-highlight mb-6 animate-pulse">Rs. 1150</p>
+                        <button class="bg-[#FFB800] text-black px-8 py-3 rounded-full uppercase font-semibold text-lg button-primary shadow-md add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Pizza Card 6: Four Cheese Fusion -->
+                <div class="bg-[#1A1A1A] rounded-2xl p-6 shadow-xl border border-gray-800 flex flex-col items-center text-center deal-card glass-effect fade-in-up">
+                    <div class="deal-card-content w-full">
+                        <img src="https://images.unsplash.com/photo-1626203597621-4d11942ab74e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/400x250/FFB800/000000?text=🍕+Four+Cheese';" alt="Four Cheese Fusion" class="w-full h-48 object-cover rounded-xl mb-6 deal-card-image">
+                        <h3 class="text-3xl font-heading text-white mb-2">Four Cheese Fusion</h3>
+                        <p class="text-lg text-gray-400 mb-4">A blend of four delicious cheeses.</p>
+                        <p class="text-5xl font-extrabold text-red-highlight mb-6 animate-pulse">Rs. 990</p>
+                        <button class="bg-[#FFB800] text-black px-8 py-3 rounded-full uppercase font-semibold text-lg button-primary shadow-md add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Burger Category -->
+            <h3 class="text-4xl font-heading text-[#FFD700] text-center mb-10 mt-16 drop-shadow-md fade-in-up">Burgers</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-20">
+                <!-- Burger Card 1: Classic Beef Burger -->
+                <div class="bg-[#1A1A1A] rounded-2xl p-6 shadow-xl border border-gray-800 flex flex-col items-center text-center deal-card glass-effect fade-in-up">
+                    <div class="deal-card-content w-full">
+                        <img src="https://images.unsplash.com/photo-1572802611832-ce0f507b99c7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/400x250/FFB800/000000?text=🍔+Classic+Beef';" alt="Classic Beef Burger" class="w-full h-48 object-cover rounded-xl mb-6 deal-card-image">
+                        <h3 class="text-3xl font-heading text-white mb-2">Classic Beef Burger</h3>
+                        <p class="text-lg text-gray-400 mb-4">Grilled beef patty, fresh lettuce & tomato.</p>
+                        <p class="text-5xl font-extrabold text-red-highlight mb-6 animate-pulse">Rs. 550</p>
+                        <button class="bg-[#FFB800] text-black px-8 py-3 rounded-full uppercase font-semibold text-lg button-primary shadow-md add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Burger Card 2: Crispy Chicken Burger -->
+                <div class="bg-[#1A1A1A] rounded-2xl p-6 shadow-xl border border-gray-800 flex flex-col items-center text-center deal-card glass-effect fade-in-up">
+                    <div class="deal-card-content w-full">
+                        <img src="https://images.unsplash.com/photo-1625944299092-d9229f527c7f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/400x250/FFB800/000000?text=🍔+Crispy+Chicken';" alt="Crispy Chicken Burger" class="w-full h-48 object-cover rounded-xl mb-6 deal-card-image">
+                        <h3 class="text-3xl font-heading text-white mb-2">Crispy Chicken Burger</h3>
+                        <p class="text-lg text-gray-400 mb-4">Golden fried chicken, mayo & fresh bun.</p>
+                        <p class="text-5xl font-extrabold text-red-highlight mb-6 animate-pulse">Rs. 480</p>
+                        <button class="bg-[#FFB800] text-black px-8 py-3 rounded-full uppercase font-semibold text-lg button-primary shadow-md add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Burger Card 3: Zesty Zinger Burger -->
+                <div class="bg-[#1A1A1A] rounded-2xl p-6 shadow-xl border border-gray-800 flex flex-col items-center text-center deal-card glass-effect fade-in-up">
+                    <div class="deal-card-content w-full">
+                        <img src="https://images.unsplash.com/photo-1627999818817-482a93325c7e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/400x250/FFB800/000000?text=🍔+Zesty+Zinger';" alt="Zesty Zinger Burger" class="w-full h-48 object-cover rounded-xl mb-6 deal-card-image">
+                        <h3 class="text-3xl font-heading text-white mb-2">Zesty Zinger Burger</h3>
+                        <p class="text-lg text-gray-400 mb-4">Spicy zinger patty with a tangy sauce.</p>
+                        <p class="text-5xl font-extrabold text-red-highlight mb-6 animate-pulse">Rs. 680</p>
+                        <button class="bg-[#FFB800] text-black px-8 py-3 rounded-full uppercase font-semibold text-lg button-primary shadow-md add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Burger Card 4: Mushroom Swiss Burger -->
+                <div class="bg-[#1A1A1A] rounded-2xl p-6 shadow-xl border border-gray-800 flex flex-col items-center text-center deal-card glass-effect fade-in-up">
+                    <div class="deal-card-content w-full">
+                        <img src="https://images.unsplash.com/photo-1563212882-70b13d2f9d6c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/400x250/FFB800/000000?text=🍔+Mushroom+Swiss';" alt="Mushroom Swiss Burger" class="w-full h-48 object-cover rounded-xl mb-6 deal-card-image">
+                        <h3 class="text-3xl font-heading text-white mb-2">Mushroom Swiss Burger</h3>
+                        <p class="text-lg text-gray-400 mb-4">Rich mushroom sauce & melted Swiss cheese.</p>
+                        <p class="text-5xl font-extrabold text-red-highlight mb-6 animate-pulse">Rs. 650</p>
+                        <button class="bg-[#FFB800] text-black px-8 py-3 rounded-full uppercase font-semibold text-lg button-primary shadow-md add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Burger Card 5: Veggie Burger -->
+                <div class="bg-[#1A1A1A] rounded-2xl p-6 shadow-xl border border-gray-800 flex flex-col items-center text-center deal-card glass-effect fade-in-up">
+                    <div class="deal-card-content w-full">
+                        <img src="https://images.unsplash.com/photo-1627999818817-482a93325c7e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/400x250/FFB800/000000?text=🍔+Veggie+Delight';" alt="Veggie Burger" class="w-full h-48 object-cover rounded-xl mb-6 deal-card-image">
+                        <h3 class="text-3xl font-heading text-white mb-2">Garden Veggie Delight</h3>
+                        <p class="text-lg text-gray-400 mb-4">Wholesome patty made with fresh vegetables.</p>
+                        <p class="text-5xl font-extrabold text-red-highlight mb-6 animate-pulse">Rs. 400</p>
+                        <button class="bg-[#FFB800] text-black px-8 py-3 rounded-full uppercase font-semibold text-lg button-primary shadow-md add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Burger Card 6: Smoky BBQ Burger -->
+                <div class="bg-[#1A1A1A] rounded-2xl p-6 shadow-xl border border-gray-800 flex flex-col items-center text-center deal-card glass-effect fade-in-up">
+                    <div class="deal-card-content w-full">
+                        <img src="https://images.unsplash.com/photo-1596894314118-8f8319f0b1a0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/400x250/FFB800/000000?text=🍔+Smoky+BBQ';" alt="Smoky BBQ Burger" class="w-full h-48 object-cover rounded-xl mb-6 deal-card-image">
+                        <h3 class="text-3xl font-heading text-white mb-2">Smoky BBQ Burger</h3>
+                        <p class="text-lg text-gray-400 mb-4">Rich smoky BBQ sauce with a tender patty.</p>
+                        <p class="text-5xl font-extrabold text-red-highlight mb-6 animate-pulse">Rs. 600</p>
+                        <button class="bg-[#FFB800] text-black px-8 py-3 rounded-full uppercase font-semibold text-lg button-primary shadow-md add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drinks Category -->
+            <h3 class="text-4xl font-heading text-[#FFD700] text-center mb-10 mt-16 drop-shadow-md fade-in-up">Drinks</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- Drink Card 1: Coca-Cola -->
+                <div class="bg-[#1A1A1A] rounded-2xl p-6 shadow-xl border border-gray-800 flex flex-col items-center text-center deal-card glass-effect fade-in-up">
+                    <div class="deal-card-content w-full">
+                        <img src="https://images.unsplash.com/photo-1625997230919-488f28f0e0c3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/400x250/FFB800/000000?text=🥤+Coca-Cola';" alt="Coca-Cola" class="w-full h-48 object-cover rounded-xl mb-6 deal-card-image">
+                        <h3 class="text-3xl font-heading text-white mb-2">Coca-Cola</h3>
+                        <p class="text-lg text-gray-400 mb-4">Classic fizzy refreshment.</p>
+                        <p class="text-5xl font-extrabold text-red-highlight mb-6 animate-pulse">Rs. 150</p>
+                        <button class="bg-[#FFB800] text-black px-8 py-3 rounded-full uppercase font-semibold text-lg button-primary shadow-md add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Drink Card 2: Fresh Lime Soda -->
+                <div class="bg-[#1A1A1A] rounded-2xl p-6 shadow-xl border border-gray-800 flex flex-col items-center text-center deal-card glass-effect fade-in-up">
+                    <div class="deal-card-content w-full">
+                        <img src="https://images.unsplash.com/photo-1552251141-864a7541176b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/400x250/FFB800/000000?text=🍋+Lime+Soda';" alt="Fresh Lime Soda" class="w-full h-48 object-cover rounded-xl mb-6 deal-card-image">
+                        <h3 class="text-3xl font-heading text-white mb-2">Fresh Lime Soda</h3>
+                        <p class="text-lg text-gray-400 mb-4">Tangy and refreshing homemade lime soda.</p>
+                        <p class="text-5xl font-extrabold text-red-highlight mb-6 animate-pulse">Rs. 200</p>
+                        <button class="bg-[#FFB800] text-black px-8 py-3 rounded-full uppercase font-semibold text-lg button-primary shadow-md add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- Drink Card 3: Orange Juice -->
+                <div class="bg-[#1A1A1A] rounded-2xl p-6 shadow-xl border border-gray-800 flex flex-col items-center text-center deal-card glass-effect fade-in-up">
+                    <div class="deal-card-content w-full">
+                        <img src="https://images.unsplash.com/photo-1543269665-79282363143c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/400x250/FFB800/000000?text=🍊+Orange+Juice';" alt="Orange Juice" class="w-full h-48 object-cover rounded-xl mb-6 deal-card-image">
+                        <h3 class="text-3xl font-heading text-white mb-2">Orange Juice</h3>
+                        <p class="text-lg text-gray-400 mb-4">Freshly squeezed orange juice.</p>
+                        <p class="text-5xl font-extrabold text-red-highlight mb-6 animate-pulse">Rs. 250</p>
+                        <button class="bg-[#FFB800] text-black px-8 py-3 rounded-full uppercase font-semibold text-lg button-primary shadow-md add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="py-16 md:py-24 bg-black text-white" id="why-choose-us">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-5xl md:text-7xl font-heading text-[#FFD700] mb-16 drop-shadow-lg fade-in-up">Why Choose 4Brothers?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="bg-[#1A1A1A] rounded-2xl p-8 glass-effect fade-in-up">
+                    <svg class="w-20 h-20 mx-auto mb-6 text-[#FFB800]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-12h2v6h-2v-6zm0 8h2v2h-2v-2z"></path></svg>
+                    <h3 class="text-3xl font-heading text-white mb-4">Fresh Ingredients</h3>
+                    <p class="text-gray-400 text-lg">We use only the freshest, locally sourced ingredients for unbeatable taste and quality.</p>
+                </div>
+                <div class="bg-[#1A1A1A] rounded-2xl p-8 glass-effect fade-in-up">
+                    <svg class="w-20 h-20 mx-auto mb-6 text-[#FFB800]" fill="currentColor" viewBox="0 0 24 24"><path d="M21 15v3c0 1.66-1.34 3-3 3h-6c-1.66 0-3-1.34-3-3v-3H4c-1.1 0-2 .9-2 2v2c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-2c0-1.1-.9-2-2-2h-3zm-1-9V3c0-1.66-1.34-3-3-3H8c-1.66 0-3 1.34-3 3v3H4c-1.1 0-2 .9-2 2v2c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-3z"></path></svg>
+                    <h3 class="text-3xl font-heading text-white mb-4">Authentic Recipes</h3>
+                    <p class="text-gray-400 text-lg">Our recipes are crafted with passion, bringing you the authentic taste of homemade goodness.</p>
+                </div>
+                <div class="bg-[#1A1A1A] rounded-2xl p-8 glass-effect fade-in-up">
+                    <svg class="w-20 h-20 mx-auto mb-6 text-[#FFB800]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-11v4l3 2 1-2-4-2z"></path></svg>
+                    <h3 class="text-3xl font-heading text-white mb-4">Fast Delivery</h3>
+                    <p class="text-gray-400 text-lg">Hot and fresh food delivered right to your doorstep, quickly and efficiently.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="py-16 md:py-24 bg-gradient-to-br from-black to-[#1A1A1A] text-white text-center">
+        <div class="container mx-auto px-6">
+            <h2 class="text-5xl md:text-7xl font-heading text-[#FFD700] mb-8 drop-shadow-lg fade-in-up">Craving Something Delicious?</h2>
+            <p class="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto fade-in-up">Don't wait! Experience the rich flavors of 4Brothers pizza and burgers today.</p>
+            <button class="bg-[#FFB800] text-black px-12 py-5 rounded-full text-xl md:text-2xl font-bold uppercase button-primary shadow-2xl relative group focus:outline-none">
+                Order Online Now!
+                <span class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center space-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 transform -translate-x-full">
+                    <svg class="w-7 h-7 text-black float-animation delay-1" fill="currentColor" viewBox="0 0 24 24"><path d="M13.5 4.5a.75.75 0 00-1.5 0v3.024a3 3 0 00-1.854 1.716L5.343 14.25H2.25a.75.75 0 000 1.5h3.633a.75.75 0 00.672-.444l1.378-2.755 2.597 1.164a.75.75 0 001.213-.538V12a6.002 6.002 0 015.145-5.918 6 6 0 00-5.145-5.918zm0 15a.75.75 0 00-1.5 0v.75a.75.75 0 001.5 0v-.75zM8.25 18a.75.75 0 00-1.5 0v.75a.75.75 0 001.5 0v-.75zM17.25 18a.75.75 0 00-1.5 0v.75a.75.75 0 001.5 0v-.75z"></path><path fill-rule="evenodd" d="M10 18.75a.75.75 0 00-1.5 0v.75a.75.75 0 001.5 0v-.75zM12 21a.75.75 0 00-1.5 0v.75a.75.75 0 001.5 0v-.75zM14 18.75a.75.75 0 00-1.5 0v.75a.75.75 0 001.5 0v-.75zM15.75 12a.75.75 0 00-1.5 0v.75a.75.75 0 001.5 0v-.75z" clip-rule="evenodd"></path></svg>
+                    <svg class="w-8 h-8 text-black float-animation delay-2" fill="currentColor" viewBox="0 0 24 24"><path d="M2.5 17.5a.5.5 0 01.5-.5h19a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-19a.5.5 0 01-.5-.5v-1zM2.5 13.5a.5.5 0 01.5-.5h19a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-19a.5.5 0 01-.5-.5v-1zM2.5 9.5a.5.5 0 01.5-.5h19a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-19a.5.5 0 01-.5-.5v-1zM2.5 5.5a.5.5 0 01.5-.5h19a.5.5 0 01.5.5v1a.5.5 0 01-.5.5h-19a.5.5 0 01-.5-.5v-1z"></path></svg>
+                </span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#1A1A1A] py-12 text-white" id="contact">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+            <!-- Contact Info -->
+            <div class="fade-in-up">
+                <h4 class="text-2xl font-heading text-[#FFD700] mb-4">Contact Us</h4>
+                <p class="text-gray-400 leading-relaxed">123 Pizza Lane, Food City, PK</p>
+                <p class="text-gray-400">Phone: +92 3XX XXX XXXX</p>
+                <p class="text-gray-400">Email: <a href="mailto:info@4brothers.com" class="hover:text-[#FFD700] transition-colors">info@4brothers.com</a></p>
+            </div>
+            <!-- Quick Menu Links -->
+            <div class="fade-in-up">
+                <h4 class="text-2xl font-heading text-[#FFD700] mb-4">Quick Links</h4>
+                <ul class="space-y-2">
+                    <li><a href="#hero" class="text-gray-400 hover:text-white transition-colors duration-300">Home</a></li>
+                    <li><a href="#menu" class="text-gray-400 hover:text-white transition-colors duration-300">Menu</a></li>
+                    <li><a href="#special-offers" class="text-gray-400 hover:text-white transition-colors duration-300">Offers</a></li>
+                </ul>
+            </div>
+            <!-- Social Links -->
+            <div class="fade-in-up">
+                <h4 class="text-2xl font-heading text-[#FFD700] mb-4">Follow Us</h4>
+                <div class="flex justify-center md:justify-start space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 transform hover:scale-110">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33V22H12c5.523 0 10-4.477 10-10Z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 transform hover:scale-110">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.715.056 8.825.351 10.125 1.663 10.45 10.318.043.93.056 1.286.056 3.715s-.013 2.784-.056 3.715c-.351 8.825-1.663 10.125-10.318 10.45-.93.043-1.286.056-3.715.056s-2.784-.013-3.715-.056c-8.825-.351-10.125-1.663-10.45-10.318-.043-.93-.056-1.286-.056-3.715s.013-2.784.056-3.715c.351-8.825 1.663-10.125 10.318-10.45.93-.043 1.286-.056 3.715-.056ZM12 4.076c-2.433 0-2.756.01-3.666.053-7.857.317-8.62 1.077-8.943 8.75-.043.91-.053 1.233-.053 3.666s.01 2.756.053 3.666c.323 7.673 1.086 8.436 8.943 8.75.91.043 1.233.053 3.666.053s2.756-.01 3.666-.053c7.857-.317 8.62-1.077 8.943-8.75.043-.91.053-1.233.053-3.666s-.01-2.756-.053-3.666c-.323-7.673-1.086-8.436-8.943-8.75-.91-.043-1.233-.053-3.666-.053ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-6.5-.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center text-gray-500 mt-10">
+            &copy; 2023 4Brothers. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for scroll-based animations, responsive menu, and Add to Cart functionality
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainNav = document.getElementById('mainNav');
+            const heroSection = document.getElementById('hero');
+            const scrollTriggerSection = document.getElementById('scroll-animation-trigger');
+            const pizzaSlice = document.getElementById('pizzaSlice');
+            const burger = document.getElementById('burger');
+            const dealText = document.getElementById('dealText');
+            const parallaxBg = document.getElementById('parallaxBg');
+            const cartCountElement = document.getElementById('cartCount');
+            const mobileCartCountElement = document.getElementById('mobileCartCount');
+            const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+            const offerCards = document.querySelectorAll('#special-offers .offer-card');
+            // Select all elements that should animate with the generic fade-in-up class
+            const scrollRevealElements = document.querySelectorAll('.fade-in-up');
+
+
+            let cartItems = 0; // Simple counter for cart items
+
+            // Mobile Menu Logic
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+
+            if (mobileMenuButton && mobileMenuOverlay) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenuOverlay.classList.remove('translate-x-full');
+                    mobileMenuOverlay.classList.add('translate-x-0');
+                });
+            }
+
+            window.closeMobileMenu = function() {
+                if (mobileMenuOverlay) {
+                    mobileMenuOverlay.classList.remove('translate-x-0');
+                    mobileMenuOverlay.classList.add('translate-x-full');
+                }
+            };
+
+            // Add to Cart Functionality
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    cartItems++;
+                    // Update desktop cart count
+                    if (cartCountElement) {
+                        cartCountElement.textContent = cartItems;
+                        cartCountElement.classList.add('cart-bounce');
+                        setTimeout(() => {
+                            cartCountElement.classList.remove('cart-bounce');
+                        }, 700); // Increased timeout for bouncier animation
+                        cartCountElement.classList.remove('scale-0'); // Ensure it's visible
+                        cartCountElement.classList.add('scale-100');
+                    }
+                    // Update mobile cart count
+                    if (mobileCartCountElement) {
+                        mobileCartCountElement.textContent = cartItems;
+                        mobileCartCountElement.classList.add('cart-bounce');
+                        setTimeout(() => {
+                            mobileCartCountElement.classList.remove('cart-bounce');
+                        }, 700); // Increased timeout
+                        mobileCartCountElement.classList.remove('scale-0'); // Ensure it's visible
+                        mobileCartCountElement.classList.add('scale-100');
+                    }
+                });
+            });
+
+            // --- Scroll Animation Logic for Hero Transition ---
+            function handleHeroScroll() {
+                const scrollY = window.scrollY;
+
+                // Defensive checks for core elements
+                if (!mainNav || !heroSection || !scrollTriggerSection || !pizzaSlice || !burger || !dealText || !parallaxBg) {
+                    return; // Exit if elements are missing
+                }
+
+                // Parallax effect for background
+                parallaxBg.style.transform = `translateY(${scrollY * 0.1}px)`;
+
+                // Header fade upward & blur
+                if (scrollY > 80) {
+                    mainNav.classList.add('header-scrolled');
+                } else {
+                    mainNav.classList.remove('header-scrolled');
+                }
+
+                // Calculate trigger offset dynamically for the initial flying animation
+                const triggerOffset = scrollTriggerSection.offsetTop - (window.innerHeight * 0.66);
+
+                // Scroll-triggered animations for pizza, burger, and text
+                if (scrollY > triggerOffset) {
+                    pizzaSlice.classList.add('animate-in');
+                    burger.classList.add('animate-in');
+                    dealText.classList.add('animate-in');
+                } else {
+                    // Reset if scrolled back up (optional, for re-triggering)
+                    // If you want to re-animate on scroll up, uncomment these lines.
+                    // For a single-time entrance, leave them commented.
+                    // pizzaSlice.classList.remove('animate-in');
+                    // burger.classList.remove('animate-in');
+                    // dealText.classList.remove('animate-in');
+                }
+            }
+
+            // --- Intersection Observer for Special Offer Cards ---
+            const offerObserverOptions = {
+                root: null, // viewport as root
+                rootMargin: '0px',
+                threshold: 0.3 // Trigger when 30% of the item is visible
+            };
+
+            const offerObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const card = entry.target;
+                        // Apply animation direction based on data-direction attribute
+                        const direction = card.getAttribute('data-direction');
+                        // Add the appropriate slide class based on direction
+                        if (window.innerWidth > 768) { // Apply complex animation only on larger screens
+                            if (direction === 'left') {
+                                card.classList.add('slide-in-left');
+                            } else if (direction === 'right') {
+                                card.classList.add('slide-in-right');
+                            }
+                        } else {
+                            // For mobile, apply a simpler fade-in-up without side slide or rotation
+                            card.classList.add('fade-in-up'); // Use the generic fade-in-up for mobile
+                        }
+
+                        // Use data-delay for stagger, ensures it only animates once per card
+                        setTimeout(() => {
+                            card.classList.add('animate-in-offer');
+                            if (window.innerWidth <= 768) { // For mobile, also apply the general animate-in
+                                card.classList.add('animate-in');
+                            }
+                        }, parseInt(card.getAttribute('data-delay') || 0, 10));
+                        observer.unobserve(card); // Stop observing once animated
+                    }
+                });
+            }, offerObserverOptions);
+
+            // Observe each offer card
+            offerCards.forEach((card, index) => {
+                // Assign data attributes for precise control: direction and staggered delay
+                if (index % 2 === 0) { // Pizza offers come from left, Burger offers from right (conceptual)
+                    card.setAttribute('data-direction', 'left');
+                } else {
+                    card.setAttribute('data-direction', 'right');
+                }
+                card.setAttribute('data-delay', index * 250); // Increased stagger delay for more visible effect
+                offerObserver.observe(card);
+            });
+
+            // --- Intersection Observer for Generic Fade In Up Elements ---
+            const genericRevealObserverOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1 // Trigger when 10% of the element is visible
+            };
+
+            const genericRevealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const element = entry.target;
+                        element.classList.add('animate-in');
+                        observer.unobserve(element); // Animate once
+                    }
+                });
+            }, genericRevealObserverOptions);
+
+            // Observe all elements with the 'fade-in-up' class
+            scrollRevealElements.forEach(element => {
+                genericRevealObserver.observe(element);
+            });
+
+
+            // Add main scroll event listener
+            window.addEventListener('scroll', handleHeroScroll);
+
+            // Initial call to set states on load
+            handleHeroScroll();
+        });
+    </script>
+</body>
+</html>
